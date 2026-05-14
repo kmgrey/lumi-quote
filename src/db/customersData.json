@@ -1,0 +1,12 @@
+{
+	"customers": [
+		{
+			"name": "Test Customer",
+			"type": "installer",
+			"address": "1 Test Street",
+			"email": "test@test.com",
+			"phone": "020 8368 0000",
+			"primary_contact": "Mister Test"
+		}
+	]
+}

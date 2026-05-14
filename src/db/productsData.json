@@ -1,0 +1,54 @@
+{
+	"ranges": [
+		{
+			"name": "Alertex",
+			"categories": [
+				{
+					"name": "Call Point with Sounder/Beacon",
+					"products": [
+						{
+							"part_code": "NXICSB-R",
+							"name": "Internal call point with sounder/beacon - red",
+							"price": 263.0
+						},
+						{
+							"part_code": "NXICSB-B",
+							"name": "Internal call point with sounder/beacon - blue",
+							"price": 269.0
+						},
+						{
+							"part_code": "NXICSB-RM",
+							"name": "Master internal call point with sounder/beacon - red",
+							"price": 275.0
+						},
+						{
+							"part_code": "NXICSB-BM",
+							"name": "Master internal call point with sounder/beacon - blue",
+							"price": 280.0
+						},
+						{
+							"part_code": "NXECSB-R",
+							"name": "External call point with sounder/beacon - red",
+							"price": 345.0
+						},
+						{
+							"part_code": "NXECSB-B",
+							"name": "External call point with sounder/beacon - blue",
+							"price": 351.0
+						},
+						{
+							"part_code": "NXECSB-RM",
+							"name": "Master external call point with sounder/beacon - red",
+							"price": 368.5
+						},
+						{
+							"part_code": "NXECSB-BM",
+							"name": "Master external call point with sounder/beacon - blue",
+							"price": 374.5
+						}
+					]
+				}
+			]
+		}
+	]
+}
