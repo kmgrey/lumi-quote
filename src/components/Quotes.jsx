@@ -6,6 +6,7 @@ export const Quotes = () => {
 	const [customers, setCustomers] = useState([]);
 	const [customerId, setCustomerId] = useState("");
 	const [modal, setModal] = useState(false);
+	const [deletingId, setDeletingId] = useState(null);
 	const navigate = useNavigate();
 
 	const fetchQuotes = async () => {
@@ -22,23 +23,38 @@ export const Quotes = () => {
 		fetchQuotes();
 	}, []);
 
+	// CREATE QUOTE
 	const handleNewQuote = async () => {
 		fetchCustomers();
 		setModal(true);
 	};
 
 	const handleCreateQuote = async () => {
-		if (!customerId) return
+		if (!customerId) return;
 		const { id } = await window.api.createQuote(Number(customerId));
 		navigate(`/quotes/${id}`);
 		setCustomerId("");
 		setModal(false);
 	};
 
+	// DELETE QUOTE
+	const triggerDeleteQuote = (id) => {
+		setDeletingId(id);
+	};
+
+	const confirmDeleteQuote = async () => {
+		await window.api.deleteQuote(deletingId);
+		setDeletingId(null);
+		fetchQuotes();
+	};
+
 	return (
 		<div>
 			<h1>Quotes</h1>
+			{/* CREATE NEW QUOTE */}
 			<button onClick={() => handleNewQuote()}>New Quote</button>
+
+			{/* QUOTES */}
 			<table>
 				<thead>
 					<tr>
@@ -56,20 +72,31 @@ export const Quotes = () => {
 						<tr key={quote.id}>
 							<td>{quote.quote_number}</td>
 							<td>{quote.customer_name}</td>
-							<td>{quote.status}</td>
+							<td>{quote.status.toUpperCase()}</td>
 							<td>{quote.discount_percent}%</td>
 							<td>£{Number(quote.total).toFixed(2)}</td>
 							<td>{new Date(quote.created_at).toLocaleDateString("en-GB")}</td>
 							<td>
 								<button onClick={() => navigate(`/quotes/${quote.id}`)}>Open</button>
 								<button onClick={() => navigate(`/quote-template/${quote.id}`)}>Print</button>
+								<button onClick={() => triggerDeleteQuote(quote.id)}>Delete</button>
 							</td>
 						</tr>
 					))}
 				</tbody>
 			</table>
 
-			{/* MODAL */}
+			{/* DELETE QUOTE MODAL */}
+			{deletingId && (
+				<div>
+					<h2>Confirm Deletion</h2>
+					<p>Are you sure you want to delete this quote?</p>
+					<button onClick={() => setDeletingId(null)}>Cancel</button>
+					<button onClick={confirmDeleteQuote}>Yes, Delete</button>
+				</div>
+			)}
+
+			{/* CREATE QUOTE MODAL */}
 			{modal && (
 				<div>
 					<h2>New Quote</h2>
