@@ -62,6 +62,7 @@ export const Quotes = () => {
 							<td>{new Date(quote.created_at).toLocaleDateString("en-GB")}</td>
 							<td>
 								<button onClick={() => navigate(`/quotes/${quote.id}`)}>Open</button>
+								<button onClick={() => navigate(`/quote-template/${quote.id}`)}>Print</button>
 							</td>
 						</tr>
 					))}

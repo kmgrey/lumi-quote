@@ -7,7 +7,7 @@ import { seedDatabase } from "./seed.js";
 const userDataPath = app.getPath("userData");
 const dbPath = path.join(userDataPath, "lumi-quote.db");
 
-console.log("👉 DELETE THIS FILE:", dbPath);
+console.log("👉 DB PATH:", dbPath);
 
 const imagesPath = path.join(userDataPath, "images");
 if (!fs.existsSync(imagesPath)) {
@@ -136,13 +136,17 @@ export function getAllQuotes() {
         SELECT 
             quotes.*, 
             customers.name as customer_name, 
+            customers.address as customer_address,
+            customers.email as customer_email,
+            customers.phone as customer_phone,
+            customers.primary_contact as customer_primary_contact,
             COALESCE(SUM(
                 quote_items.quantity * quote_items.unit_price
                 * CASE WHEN quote_items.discount_eligible = 1
                     THEN (1.0 - quotes.discount_percent / 100.0)
                     ELSE 1.0
                 END
-            ), 0) as total 
+            ), 0) as total
         FROM quotes 
         JOIN customers ON quotes.customer_id = customers.id 
         LEFT JOIN quote_items ON quote_items.quote_id = quotes.id
@@ -154,7 +158,13 @@ export function getAllQuotes() {
 export function getQuoteById(id) {
 	// prettier-ignore
 	return db.prepare(`
-        SELECT quotes.*, customers.name as customer_name 
+        SELECT 
+            quotes.*, 
+            customers.name as customer_name,
+            customers.address as customer_address,
+            customers.email as customer_email,
+            customers.phone as customer_phone,
+            customers.primary_contact as customer_primary_contact 
         FROM quotes 
         JOIN customers ON quotes.customer_id = customers.id 
         WHERE quotes.id = ?

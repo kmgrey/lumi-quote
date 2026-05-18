@@ -27,4 +27,6 @@ contextBridge.exposeInMainWorld("api", {
 	updateQuoteDiscount: (id, discount_percent) => ipcRenderer.invoke("update-quote-discount", id, discount_percent),
 	updateQuoteStatus: (id, status) => ipcRenderer.invoke("update-quote-status", id, status),
 	deleteQuote: (id) => ipcRenderer.invoke("delete-quote", id),
+	// PDF
+	exportPdf: (quoteId) => ipcRenderer.invoke("export-pdf", quoteId),
 });

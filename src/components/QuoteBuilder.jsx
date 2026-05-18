@@ -44,6 +44,11 @@ export const QuoteBuilder = () => {
 		await window.api.updateQuoteDiscount(id, value);
 	};
 
+	const handleQuoteStatus = async (quoteId, status) => {
+		await window.api.updateQuoteStatus(quoteId, status);
+		fetchQuote(id);
+	};
+
 	const handleAddProduct = async (productId) => {
 		if (!productId) return;
 		const product = products.find((p) => p.id === Number(productId));
@@ -53,6 +58,11 @@ export const QuoteBuilder = () => {
 
 	const handleQuantityChange = async (itemId, quantity, discount_eligible) => {
 		if (quantity < 1) return;
+		await window.api.updateQuoteItem(itemId, quantity, discount_eligible);
+		fetchItems();
+	};
+
+	const handleDiscountEligibility = async (itemId, quantity, discount_eligible) => {
 		await window.api.updateQuoteItem(itemId, quantity, discount_eligible);
 		fetchItems();
 	};
@@ -80,9 +90,25 @@ export const QuoteBuilder = () => {
 						<tr>
 							<td>{quote.quote_number}</td>
 							<td>{quote.customer_name}</td>
-							<td>{quote.status}</td>
 							<td>
-								<input type="number" value={quote.discount_percent} onChange={(e) => handleDiscountChange(e.target.value)} />
+								<select value={quote.status} onChange={(e) => handleQuoteStatus(quote.id, e.target.value)}>
+									<option value="draft">DRAFT</option>
+									<option value="sent">SENT</option>
+								</select>
+							</td>
+							<td>
+								<input
+									type="number"
+									min="0"
+									max="30"
+									value={quote.discount_percent}
+									onChange={(e) => handleDiscountChange(e.target.value)}
+									onKeyDown={(e) => {
+										if (e.key !== "ArrowUp" && e.key !== "ArrowDown") {
+											e.preventDefault();
+										}
+									}}
+								/>
 							</td>
 						</tr>
 					</tbody>
@@ -124,8 +150,15 @@ export const QuoteBuilder = () => {
 										onChange={(e) => handleQuantityChange(item.id, Number(e.target.value), item.discount_eligible)}
 									/>
 								</td>
-								<td>{item.unit_price}</td>
-								<td>{item.discount_eligible ? "Yes" : "No"}</td>
+								<td>£{item.unit_price.toFixed(2)}</td>
+								<td>
+									<input
+										type="checkbox"
+										checked={item.discount_eligible}
+										onChange={(e) => handleDiscountEligibility(item.id, item.quantity, item.discount_eligible ? 0 : 1)}
+									/>
+									{item.discount_eligible ? "Yes" : "No"}
+								</td>
 								<td>
 									£
 									{(item.discount_eligible
@@ -152,6 +185,8 @@ export const QuoteBuilder = () => {
 					</tr>
 				</tfoot>
 			</table>
+			{/* EXPORT TO PDF */}
+			<button onClick={() => window.api.exportPdf(id)}>Export PDF</button>
 		</div>
 	);
 };

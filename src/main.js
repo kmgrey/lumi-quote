@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import path from "node:path";
 import fs from "node:fs";
 import started from "electron-squirrel-startup";
@@ -147,4 +147,39 @@ ipcMain.handle("update-quote-status", (event, id, status) => {
 
 ipcMain.handle("delete-quote", (event, id) => {
 	return deleteQuote(id);
+});
+
+// PDF
+ipcMain.handle("export-pdf", async (event, quoteId) => {
+	const printWindow = new BrowserWindow({
+		show: false,
+		webPreferences: { preload: path.join(__dirname, "preload.js") },
+	});
+
+	if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+		await printWindow.loadURL(`${MAIN_WINDOW_VITE_DEV_SERVER_URL}/quote-template/${quoteId}`);
+	} else {
+		await printWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`), { hash: `/quote-template/${quoteId}` });
+	}
+
+	await new Promise((resolve) => setTimeout(resolve, 1500));
+
+	const pdfData = await printWindow.webContents.printToPDF({
+		printBackground: true,
+		pageSize: "A4",
+	});
+
+	printWindow.close();
+
+	const { filePath, canceled } = await dialog.showSaveDialog({
+		title: "Save Quote PDF",
+		defaultPath: `quote-${quoteId}.pdf`,
+		filters: [{ name: "PDF", extensions: ["pdf"] }],
+	});
+
+	if (canceled || !filePath) return { success: false };
+
+	fs.writeFileSync(filePath, pdfData);
+
+	return { success: true, filePath };
 });
