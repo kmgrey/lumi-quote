@@ -3,20 +3,19 @@ import { Link } from "react-router-dom";
 export const Header = () => {
 	return (
 		<header>
-			<h1>LumiQuote v1</h1>
+			<h1>LumiQuote</h1>
 			<nav>
-				<ul>
-					<li>
-						<Link to="/products">Products</Link>
-					</li>
-					<li>
-						<Link to="/customers">Customer</Link>
-					</li>
-					<li>
-						<Link to="/quotes">Quotes</Link>
-					</li>
-				</ul>
+				<Link to="/products" className="nav-link">
+					Products
+				</Link>
+				<Link to="/customers" className="nav-link">
+					Customers
+				</Link>
+				<Link to="/quotes" className="nav-link">
+					Quotes
+				</Link>
 			</nav>
+			
 		</header>
 	);
 };

@@ -1,0 +1,48 @@
+.customer-table {
+	table-layout: fixed;
+	width: 100%;
+	max-width: 1280px;
+	border-collapse: collapse;
+	text-align: center;
+}
+.customer-table th,
+.customer-table td {
+	border: 3px solid blue;
+   padding: 4px;
+	height: 1px;
+}
+.customer-table-header th {
+	background-color: rgb(59, 128, 255);
+	color: white;
+	height: 30px;
+}
+.customer-table .td-borderless {
+	background-color: transparent;
+	border-right: transparent;
+	border-bottom: transparent;
+	border-top: transparent;
+}
+.customer-table .name,
+.customer-table .type,
+.customer-table .phone,
+.customer-table .email,
+.customer-table .primary-contact,
+.customer-table .table-button-column {
+	width: 150px;
+}
+.customer-table input,
+.customer-table select {
+	width: 100%;
+	height: 50%;
+	border: none;
+	outline: none;
+	padding: 8px;
+	margin: 0px;
+   color: blue;
+	background-color: white;
+}
+.customer-table input:focus,
+.customer-table select:focus {
+	box-shadow: inset 0px 0px 3px 1px rgb(255, 207, 48);
+   color: darkorange;
+}

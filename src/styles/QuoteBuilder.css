@@ -1,0 +1,137 @@
+/* SELECT PRODUCT */
+.product-select {
+	height: 50px;
+	width: 1130px;
+	display: flex;
+	justify-content: space-between;
+   align-items: center;
+}
+.product-select label {
+	font-size: 1.2rem;
+   font-weight: bold;
+}
+.product-select select {
+   height: 100%;
+   width: 65%;
+   padding: 8px;
+   border: 3px solid blue;
+   color: blue;
+}
+.product-select select:active {
+	box-shadow: inset 0px 0px 1px 3px blue;
+}
+/* TABLES */
+.quote-info-table {
+	width: 1130px;
+}
+.quote-items-table {
+	width: 100%;
+}
+.quote-info-table,
+.quote-items-table {
+	table-layout: fixed;
+	border-collapse: collapse;
+	text-align: center;
+}
+.quote-info-table th,
+.quote-info-table td,
+.quote-items-table th,
+.quote-items-table td {
+	border: 3px solid blue;
+	padding: 4px;
+	height: 1px;
+}
+.quote-info-table .med-col {
+	width: 200px;
+}
+.quote-info-table th,
+.quote-items-table th {
+	background-color: rgb(59, 128, 255);
+	color: white;
+	height: 30px;
+}
+.quote-items-table .td-borderless {
+	background-color: transparent;
+	border-right: transparent;
+	border-bottom: transparent;
+	border-top: transparent;
+}
+.quote-items-table .small-col {
+	width: 100px;
+}
+.quote-items-table .med-col {
+	width: 125px;
+}
+.quote-items-table .table-button-column {
+	width: 150px;
+}
+.quote-items-table-footer .td-borderless {
+	border-left: transparent;
+}
+.quote-info-table select {
+	width: 80%;
+	height: 100%;
+	border: none;
+	background-color: white;
+	color: blue;
+}
+.quote-info-table input,
+.quote-items-table input {
+	width: 80%;
+	height: 40%;
+	border: none;
+	outline: none;
+	padding: 8px;
+	margin: 0px;
+	color: blue;
+	background-color: white;
+}
+.quote-items-table input[type="checkbox"] {
+	width: 25px;
+}
+.quote-items-table input:focus {
+	box-shadow: inset 0px 0px 1px 3px blue;
+}
+/* FORCE VISIBLE NUM ARROWS */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	opacity: 1;
+}
+/* NUM BUTTONS */
+/*
+.num-input::-webkit-outer-spin-button,
+.num-input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+.num-input {
+	-moz-appearance: textfield;
+}
+.number-control {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+	height: 100%;
+}
+.num-btn {
+	width: 16px;
+	height: 16px;
+	background-color: rgb(59, 128, 255);
+	color: white;
+	border: none;
+	font-weight: bold;
+	font-size: 1.2rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.num-btn:hover {
+	background-color: blue;
+	transition: 150ms;
+}
+.num-btn:active {
+	transform: scale(0.9);
+}
+   */

@@ -93,14 +93,32 @@ export const Customers = () => {
 	};
 
 	return (
-		<div>
-			<h1>Customers</h1>
+		<div className="page-container">
+			<h1 className="page-title">• Customers •</h1>
 			{/* CREATE NEW CUSTOMER */}
-			<button onClick={() => setModal(true)}>New Customer</button>
+			<button className="outer-button" onClick={() => setModal(true)}>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-plus-fill" viewBox="0 0 16 16">
+					<path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+					<path
+						fill-rule="evenodd"
+						d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"
+					/>
+				</svg>
+				New Customer
+			</button>
 
 			{/* CUSTOMERS && EDIT CUSTOMERS */}
-			<table>
-				<thead>
+			<table className="customer-table">
+				<colgroup>
+							<col className="name" />
+							<col className="type" />
+							<col className="address" /> 
+							<col className="email" /> 
+							<col className="phone" />
+							<col className="primary-contact" />
+							<col className="table-button-column" /> 
+						</colgroup>
+				<thead className="customer-table-header">
 					<tr>
 						<th>Name</th>
 						<th>Type</th>
@@ -108,7 +126,7 @@ export const Customers = () => {
 						<th>Email</th>
 						<th>Phone</th>
 						<th>Primary Contact</th>
-						<th></th>
+						<th className="td-borderless"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -137,9 +155,36 @@ export const Customers = () => {
 									<td>
 										<input type="text" value={editForm.primary_contact} onChange={(e) => handleChange("primary_contact", e.target.value)} />
 									</td>
-									<td>
-										<button onClick={() => handleSave(customer.id)}>Save</button>
-										<button onClick={() => setEditingId(null)}>Cancel</button>
+									<td className="table-button-column td-borderless">
+										<div className="table-button-container">
+											<button className="table-button save" onClick={() => handleSave(customer.id)}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													fill="currentColor"
+													className="bi bi-floppy2-fill"
+													viewBox="0 0 16 16"
+												>
+													<path d="M12 2h-2v3h2z" />
+													<path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v13A1.5 1.5 0 0 0 1.5 16h13a1.5 1.5 0 0 0 1.5-1.5V2.914a1.5 1.5 0 0 0-.44-1.06L14.147.439A1.5 1.5 0 0 0 13.086 0zM4 6a1 1 0 0 1-1-1V1h10v4a1 1 0 0 1-1 1zM3 9h10a1 1 0 0 1 1 1v5H2v-5a1 1 0 0 1 1-1" />
+												</svg>
+												Save
+											</button>
+											<button className="table-button cancel" onClick={() => setEditingId(null)}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													fill="currentColor"
+													className="bi bi-x-square-fill"
+													viewBox="0 0 16 16"
+												>
+													<path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708" />
+												</svg>
+												Cancel
+											</button>
+										</div>
 									</td>
 								</>
 							) : (
@@ -150,9 +195,35 @@ export const Customers = () => {
 									<td>{customer.email}</td>
 									<td>{customer.phone}</td>
 									<td>{customer.primary_contact}</td>
-									<td>
-										<button onClick={() => handleEdit(customer)}>Edit</button>
-										<button onClick={() => triggerDeleteCustomer(customer.id)}>Delete</button>
+									<td className="table-button-column td-borderless">
+										<div className="table-button-container">
+											<button className="table-button edit" onClick={() => handleEdit(customer)}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													fill="currentColor"
+													className="bi bi-pencil-fill"
+													viewBox="0 0 16 16"
+												>
+													<path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+												</svg>
+												Edit
+											</button>
+											<button className="table-button delete" onClick={() => triggerDeleteCustomer(customer.id)}>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													width="16"
+													height="16"
+													fill="currentColor"
+													className="bi bi-trash3-fill"
+													viewBox="0 0 16 16"
+												>
+													<path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+												</svg>
+												Delete
+											</button>
+										</div>
 									</td>
 								</>
 							)}

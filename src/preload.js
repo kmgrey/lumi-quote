@@ -29,4 +29,6 @@ contextBridge.exposeInMainWorld("api", {
 	deleteQuote: (id) => ipcRenderer.invoke("delete-quote", id),
 	// PDF
 	exportPdf: (quoteId) => ipcRenderer.invoke("export-pdf", quoteId),
+	// CSV
+	importProductsCsv: () => ipcRenderer.invoke("import-products-csv"),
 });

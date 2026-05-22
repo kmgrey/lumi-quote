@@ -5,6 +5,14 @@ import { Customers } from "./components/Customers";
 import { Quotes } from "./components/Quotes";
 import { QuoteBuilder } from "./components/QuoteBuilder";
 import { QuoteTemplate } from "./components/QuoteTemplate";
+// STYLES
+import "./index.css";
+import "./styles/Header.css";
+import "./styles/Products.css";
+import "./styles/Customers.css";
+import "./styles/Quotes.css";
+import "./styles/QuoteBuilder.css";
+import "./styles/QuoteTemplate.css";
 
 function App() {
 	// prettier-ignore

@@ -1,8 +1,124 @@
+* {
+	font-family: monospace;
+	padding: 0;
+	font-size: 16px;
+	box-sizing: border-box;
+}
 body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+	margin: 0;
+	background-color: rgb(201, 201, 201);
+	color: blue;
+}
+.page-container {
+	max-width: 1280px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+	margin: auto;
+}
+.page-title {
+	font-size: 2.3rem;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	margin: 0;
+	padding: 8px;
+	background-color: rgb(184, 183, 183);
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+}
+/* TABLE */
+.table {
+	width: 100%;
+	max-width: 1200px;
+	border-collapse: collapse;
+	text-align: center;
+}
+.table th,
+.table td {
+	border: 3px solid blue;
+}
+.table-header th {
+	background-color: rgb(59, 128, 255);
+	color: white;
+	height: 30px;
+}
+.table-button-column {
+	width: 130px;
+}
+table .td-borderless {
+	background-color: transparent;
+	border-right: transparent;
+	border-bottom: transparent;
+	border-top: transparent;
+}
+/* BUTTONS */
+.table-button-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+.table-button {
+	height: 40px;
+	width: 90%;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: bold;
+	color: white;
+	border-top: 0.5px solid white;
+	border-left: 0.5px solid white;
+	border-bottom: 3px solid rgb(158, 158, 158);
+	border-right: 3px solid white;
+	margin-bottom: 4px;
+}
+.table-button svg {
+	transform: translate(-4px, 1px);
+}
+.table-button:hover {
+	transition: 150ms;
+	box-shadow: 3px 3px rgba(0, 0, 0, 0.5);
+}
+.table-button:active {
+	transition: 150ms;
+	transform: translate(3px, 3px);
+	box-shadow: none;
+}
+.table-button.save {
+	background-color: green;
+}
+.table-button.cancel {
+	background-color: rgb(219, 39, 39);
+}
+.table-button.edit {
+	background-color: blue;
+}
+.table-button.delete {
+	background-color: rgb(219, 39, 39);
+}
+.outer-button {
+	width: 250px;
+	height: 40px;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 2.5px;
+	color: white;
+	background-color: blue;
+	border-top: 0.5px solid white;
+	border-left: 0.5px solid white;
+	border-bottom: 3px solid rgb(158, 158, 158);
+	border-right: 3px solid white;
+}
+.outer-button svg {
+	transform: translate(-6px, 1px);
+}
+.outer-button:hover {
+	transition: 150ms;
+	background-color: rgb(59, 128, 255);
+	box-shadow: 3px 3px rgba(0, 0, 0, 0.5);
+}
+.outer-button:active {
+	transition: 150ms;
+	transform: translate(3px, 3px);
+	box-shadow: none;
 }

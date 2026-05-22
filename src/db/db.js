@@ -71,7 +71,7 @@ db.exec(`
     );
 `);
 
-seedDatabase(db);
+// seedDatabase(db);
 
 // PRODUCTS
 export function getAllRanges() {
@@ -125,7 +125,7 @@ export function deleteCustomer(id) {
 export function createQuote(customer_id) {
 	const result = db.prepare("INSERT INTO quotes (customer_id) VALUES (?)").run(customer_id);
 	const id = result.lastInsertRowid;
-	const quote_number = `QUOTE-${String(id).padStart(4, "0")}`;
+	const quote_number = `LQ-${String(id).padStart(4, "0")}`;
 	db.prepare("UPDATE quotes SET quote_number = ? WHERE id = ?").run(quote_number, id);
 	return { id, quote_number };
 }
@@ -140,13 +140,31 @@ export function getAllQuotes() {
             customers.email as customer_email,
             customers.phone as customer_phone,
             customers.primary_contact as customer_primary_contact,
+
             COALESCE(SUM(
                 quote_items.quantity * quote_items.unit_price
                 * CASE WHEN quote_items.discount_eligible = 1
                     THEN (1.0 - quotes.discount_percent / 100.0)
                     ELSE 1.0
                 END
-            ), 0) as total
+            ), 0) as net_total,
+
+            COALESCE(SUM(
+                quote_items.quantity * quote_items.unit_price
+                * CASE WHEN quote_items.discount_eligible = 1
+                    THEN (1.0 - quotes.discount_percent / 100.0)
+                    ELSE 1.0
+                END
+            ), 0) * 0.20 as vat_amount,
+
+            COALESCE(SUM(
+                quote_items.quantity * quote_items.unit_price
+                * CASE WHEN quote_items.discount_eligible = 1
+                    THEN (1.0 - quotes.discount_percent / 100.0)
+                    ELSE 1.0
+                END
+            ), 0) * 1.20 as gross_total
+
         FROM quotes 
         JOIN customers ON quotes.customer_id = customers.id 
         LEFT JOIN quote_items ON quote_items.quote_id = quotes.id
@@ -174,7 +192,7 @@ export function getQuoteById(id) {
 export function getQuoteItems(quote_id) {
 	// prettier-ignore
 	return db.prepare(`
-        SELECT quote_items.*, products.name, products.part_code 
+        SELECT quote_items.*, products.name, products.part_code, products.image 
         FROM quote_items 
         JOIN products ON quote_items.product_id = products.id 
         WHERE quote_items.quote_id = ?
@@ -206,4 +224,31 @@ export function updateQuoteStatus(id, status) {
 export function deleteQuote(id) {
 	db.prepare("DELETE FROM quote_items WHERE quote_id = ?").run(id);
 	db.prepare("DELETE FROM quotes WHERE id = ?").run(id);
+}
+
+// CSV IMPORT
+export function findOrCreateRange(name) {
+	let range = db.prepare("SELECT * FROM ranges WHERE name = ?").get(name);
+
+	if (!range) {
+		const result = db.prepare("INSERT INTO ranges (name) VALUES (?)").run(name);
+		range = { id: result.lastInsertRowid };
+	}
+	return range;
+}
+
+export function findOrCreateCategory(name, rangeId) {
+	let category = db.prepare("SELECT * FROM categories WHERE name = ?").get(name);
+
+	if (!category) {
+		const result = db.prepare("INSERT INTO categories (name, range_id) VALUES (?, ?)").run(name, rangeId);
+		category = { id: result.lastInsertRowid };
+	}
+	return category;
+}
+
+export function addProductFromImport(part_code, name, price, image, categoryId) {
+	return db
+		.prepare("INSERT INTO products (part_code, name, price, image, category_id) VALUES (?, ?, ?, ?, ?)")
+		.run(part_code, name, price, image, categoryId);
 }

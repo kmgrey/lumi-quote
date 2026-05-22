@@ -1,0 +1,27 @@
+.quotes-table {
+	table-layout: fixed;
+	width: 100%;
+	max-width: 1280px;
+	border-collapse: collapse;
+	text-align: center;
+}
+.quotes-table th,
+.quotes-table td {
+	border: 3px solid blue;
+   padding: 4px;
+	height: 1px;
+}
+.quotes-table-header th {
+	background-color: rgb(59, 128, 255);
+	color: white;
+	height: 30px;
+}
+.quotes-table .td-borderless {
+	background-color: transparent;
+	border-right: transparent;
+	border-bottom: transparent;
+	border-top: transparent;
+}
+.quotes-table .table-button-column {
+	width: 150px;
+}

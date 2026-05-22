@@ -1,0 +1,121 @@
+@media print {
+	body {
+		background-color: white;
+	}
+	@page {
+		margin: 5mm 5mm 5mm 5mm;
+	}
+	#quote-template {
+		zoom: 70%;
+	}
+}
+#quote-template {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+	margin: auto;
+	color: black;
+	background-color: white;
+}
+#quote-template-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	width: 100%;
+
+	border-bottom: 3px solid black;
+	padding-bottom: 10px;
+	margin-top: -25px;
+}
+#quote-template-header div {
+	margin-bottom: 0;
+}
+#quote-template-header svg {
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+	/*color: rgb(30, 108, 253);*/
+	color: grey;
+}
+#quote-template-header div:nth-child(1) h3 {
+	font-size: 1.8rem;
+	margin: 15px 0;
+}
+#quote-template-header div:nth-child(1) p {
+	display: flex;
+	align-items: center;
+	font-size: 1.2rem;
+	line-height: 1.6rem;
+	margin: 5px 0;
+}
+#quote-template-header div:nth-child(2) div {
+	padding-left: 90px;
+}
+#quote-template-header div:nth-child(2) p {
+	margin: 0;
+	line-height: 1.5rem;
+}
+.logo {
+	width: 300px;
+	position: relative;
+	top: 30px;
+	right: 60px;
+}
+#quote-template-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	width: 100%;
+	border-top: 3px solid black;
+	padding: 10px 0;
+}
+#quote-template-footer div {
+	margin-top: 0;
+}
+#quote-template-footer h4 {
+	font-size: 1.2rem;
+	margin: 10px 0;
+}
+/* TABLE */
+#quote-template table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+	table-layout: fixed;
+}
+#quote-template .desc {
+	width: 30%;
+}
+#quote-template th {
+	background-color: rgb(211, 211, 211);
+}
+#quote-template th,
+#quote-template td {
+	border: 2px solid black;
+	padding: 5px;
+}
+#quote-template-details {
+	width: 100%;
+}
+#quote-template-details h1 {
+	text-align: center;
+	font-size: 1.5rem;
+	padding: 10px;
+}
+#quote-template-details table {
+	text-align: left;
+}
+#quote-template-details th {
+	width: 200px;
+}
+#quote-template-items {
+	margin: 20px 0;
+	width: 100%;
+}
+#quote-template .td-borderless {
+	border-left: transparent;
+	border-bottom: transparent;
+	border-top: transparent;
+}

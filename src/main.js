@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import path from "node:path";
 import fs from "node:fs";
 import started from "electron-squirrel-startup";
+import Papa from "papaparse";
 import {
 	getAllRanges,
 	getProductsByRange,
@@ -23,6 +24,9 @@ import {
 	updateQuoteDiscount,
 	updateQuoteStatus,
 	deleteQuote,
+	findOrCreateRange,
+	findOrCreateCategory,
+	addProductFromImport,
 } from "./db/db.js";
 
 if (started) {
@@ -31,8 +35,8 @@ if (started) {
 
 const createWindow = () => {
 	const mainWindow = new BrowserWindow({
-		width: 1200,
-		height: 800,
+		width: 1600,
+		height: 1200,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
 		},
@@ -182,4 +186,55 @@ ipcMain.handle("export-pdf", async (event, quoteId) => {
 	fs.writeFileSync(filePath, pdfData);
 
 	return { success: true, filePath };
+});
+
+// CVS IMPORT
+ipcMain.handle("import-products-csv", async () => {
+	const { filePaths: csvPaths, canceled: csvCanceled } = await dialog.showOpenDialog({
+		title: "Select Product CSV",
+		properties: ["openFile"],
+		filters: [{ name: "CSV", extensions: ["csv"] }],
+	});
+	if (csvCanceled || !csvPaths.length) return { success: false };
+
+	const { filePaths: imageFolders, canceled: imagesCanceled } = await dialog.showOpenDialog({
+		title: "Select Images Folder",
+		properties: ["openDirectory"],
+	});
+	if (imagesCanceled || !imageFolders.length) return { success: false };
+
+	const csvPath = csvPaths[0];
+	const imageFolder = imageFolders[0];
+
+	const csvText = fs.readFileSync(csvPath, "utf8");
+	const { data } = Papa.parse(csvText, {
+		header: true,
+		skipEmptyLines: true,
+	});
+
+	const results = { imported: 0, skipped: 0, errors: [] };
+
+	for (const row of data) {
+		try {
+			const range = findOrCreateRange(row.range_name);
+			const category = findOrCreateCategory(row.category_name, range.id);
+
+			let imageFilename = null;
+			if (row.image) {
+				const sourcePath = path.join(imageFolder, row.image);
+				if (fs.existsSync(sourcePath)) {
+					fs.copyFileSync(sourcePath, path.join(imagesPath, row.image));
+					imageFilename = row.image;
+				} else {
+					results.errors.push(`Image not found for ${row.part_code}: ${row.image}`);
+				}
+			}
+			addProductFromImport(row.part_code, row.name, Number(row.price), imageFilename, category.id);
+			results.imported++;
+		} catch (err) {
+			results.skipped++;
+			results.errors.push(`Failed to import ${row.part_code}: ${err.message}`);
+		}
+	}
+	return { success: true, ...results };
 });
