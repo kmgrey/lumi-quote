@@ -3,31 +3,31 @@ import path from "node:path";
 import fs from "node:fs";
 import started from "electron-squirrel-startup";
 import Papa from "papaparse";
-// import {
-// 	getAllRanges,
-// 	getProductsByRange,
-// 	addProduct,
-// 	updateProduct,
-// 	deleteProduct,
-// 	imagesPath,
-// 	getCustomers,
-// 	addCustomer,
-// 	updateCustomer,
-// 	deleteCustomer,
-// 	createQuote,
-// 	getAllQuotes,
-// 	getQuoteById,
-// 	getQuoteItems,
-// 	addQuoteItem,
-// 	updateQuoteItem,
-// 	removeQuoteItem,
-// 	updateQuoteDiscount,
-// 	updateQuoteStatus,
-// 	deleteQuote,
-// 	findOrCreateRange,
-// 	findOrCreateCategory,
-// 	addProductFromImport,
-// } from "./db/db.js";
+import {
+	getAllRanges,
+	getProductsByRange,
+	addProduct,
+	updateProduct,
+	deleteProduct,
+	imagesPath,
+	getCustomers,
+	addCustomer,
+	updateCustomer,
+	deleteCustomer,
+	createQuote,
+	getAllQuotes,
+	getQuoteById,
+	getQuoteItems,
+	addQuoteItem,
+	updateQuoteItem,
+	removeQuoteItem,
+	updateQuoteDiscount,
+	updateQuoteStatus,
+	deleteQuote,
+	findOrCreateRange,
+	findOrCreateCategory,
+	addProductFromImport,
+} from "./db/db.js";
 
 if (started) {
 	app.quit();
