@@ -3,13 +3,16 @@ const { FuseV1Options, FuseVersion } = require("@electron/fuses");
 
 module.exports = {
 	packagerConfig: {
-		asar: true,
+		asar: {
+			unpack: "**/node_modules/better-sqlite3/**",
+		},
 		name: "LumiQuote",
 		executableName: "lumi-quote",
 		icon: "./src/assets/icon",
 	},
 	rebuildConfig: {
 		forceRebuild: true,
+		onlyModules: ["better-sqlite3"],
 	},
 	makers: [
 		{
