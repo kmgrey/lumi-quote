@@ -90,3 +90,9 @@ typings/
 
 # Electron-Forge
 out/
+
+# DB
+src/db/seed.js
+src/db/productsData.json
+src/db/customersData.json
+*.db

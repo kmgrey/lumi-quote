@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import path from "node:path";
 import { app } from "electron";
 import fs from "node:fs";
-import { seedDatabase } from "./seed.js";
+// import { seedDatabase } from "./seed.js";
 
 const userDataPath = app.getPath("userData");
 const dbPath = path.join(userDataPath, "lumi-quote.db");

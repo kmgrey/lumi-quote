@@ -37,14 +37,14 @@ export const Products = () => {
 		await window.api.updateProduct(id, editForm.name, editForm.part_code, editForm.price);
 		setEditingId(null);
 		setEditForm({ name: "", part_code: "", price: "" });
-		fetchProducts();
+		fetchAllData();
 	};
 
 	const handleImportCsv = async () => {
 		const result = await window.api.importProductsCsv();
 		if (!result.success) return;
 		alert(`Imported: ${result.imported} products. Skipped: ${result.skipped}`);
-		fetchProducts();
+	fetchAllData();
 	};
 
 	return (
