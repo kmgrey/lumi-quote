@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProductImage } from "./ProductImage";
+import { PdfIcon, DeleteIcon } from "./Icons";
 
 export const QuoteBuilder = () => {
 	const [quote, setQuote] = useState(null);
 	const [items, setItems] = useState([]);
 	const [products, setProducts] = useState([]);
+	const [error, setError] = useState("");
 	const { id } = useParams();
 
 	const fetchProducts = async () => {
@@ -64,6 +66,14 @@ export const QuoteBuilder = () => {
 		fetchItems();
 	};
 
+	const handleExportPdf = async (id) => {
+		if (items.length === 0) {
+			setError("Cannot export empty quote!");
+			return;
+		}
+		await window.api.exportPdf(id);
+	};
+
 	const VAT_RATE = 0.2;
 
 	const netTotal = items.reduce((sum, item) => {
@@ -79,9 +89,11 @@ export const QuoteBuilder = () => {
 		<div className="page-container">
 			<h1 className="page-title">• Quote Builder •</h1>
 			{/* EXPORT TO PDF */}
-			<button className="outer-button" onClick={() => window.api.exportPdf(id)}>
+			<button className="outer-button" onClick={() => handleExportPdf(id)}>
+				<PdfIcon />
 				Export PDF
 			</button>
+			{error && <p className="err-msg">{error}</p>}
 			{/* QUOTE INFO */}
 			<table className="quote-info-table">
 				<colgroup>
@@ -221,16 +233,7 @@ export const QuoteBuilder = () => {
 								<td className="td-borderless">
 									<div className="table-button-container">
 										<button className="table-button delete" onClick={() => handleRemoveItem(item.id)}>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												fill="currentColor"
-												class="bi bi-trash3-fill"
-												viewBox="0 0 16 16"
-											>
-												<path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-											</svg>
+											<DeleteIcon />
 											Delete
 										</button>
 									</div>

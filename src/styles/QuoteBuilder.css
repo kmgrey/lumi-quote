@@ -14,11 +14,18 @@
    height: 100%;
    width: 65%;
    padding: 8px;
-   border: 3px solid blue;
+   border-right: 3px solid blue;
+	border-bottom: 3px solid blue;
+	border-top: none;
+	border-left: none;
+	outline: none;
    color: blue;
+	font-weight: bold;
 }
 .product-select select:active {
-	box-shadow: inset 0px 0px 1px 3px blue;
+	border-right: 3px solid orange;
+	border-bottom: 3px solid orange;
+	color: orange;
 }
 /* TABLES */
 .quote-info-table {
@@ -71,26 +78,37 @@
 .quote-info-table select {
 	width: 80%;
 	height: 100%;
-	border: none;
+	border-right: 3px solid blue;
+	border-bottom: 3px solid blue;
+	border-top: none;
+	border-left: none;
+	outline: none;
 	background-color: white;
 	color: blue;
+	font-weight: bold;
 }
 .quote-info-table input,
 .quote-items-table input {
 	width: 80%;
 	height: 40%;
-	border: none;
+	border-right: 3px solid blue;
+	border-bottom: 3px solid blue;
+	border-top: none;
+	border-left: none;
 	outline: none;
 	padding: 8px;
 	margin: 0px;
 	color: blue;
 	background-color: white;
+	font-weight: bold;
 }
 .quote-items-table input[type="checkbox"] {
 	width: 25px;
 }
 .quote-items-table input:focus {
-	box-shadow: inset 0px 0px 1px 3px blue;
+	border-right: 3px solid orange;
+	border-bottom: 3px solid orange;
+	color: orange;
 }
 /* FORCE VISIBLE NUM ARROWS */
 input[type="number"]::-webkit-inner-spin-button,

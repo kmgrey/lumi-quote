@@ -34,15 +34,66 @@
 .customer-table select {
 	width: 100%;
 	height: 50%;
-	border: none;
+	border-right: 3px solid blue;
+	border-bottom: 3px solid blue;
+	border-top: none;
+	border-left: none;
 	outline: none;
 	padding: 8px;
 	margin: 0px;
    color: blue;
 	background-color: white;
+	font-weight: bold;
 }
 .customer-table input:focus,
 .customer-table select:focus {
-	box-shadow: inset 0px 0px 3px 1px rgb(255, 207, 48);
-   color: darkorange;
+	border-right: 3px solid orange;
+	border-bottom: 3px solid orange;
+	color: orange;
+}
+.customers .modal {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	margin-top: 20px;
+}
+.customers .modal h2 {
+	margin: 0;
+	font-size: 1.8rem;
+}
+.customers .modal form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.customers .modal label {
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+}
+.customers .modal input,
+.customers .modal select {
+	width: 400px;
+	height: 40px;
+	outline: none;
+	border-right: 3px solid blue;
+	border-bottom: 3px solid blue;
+	border-top: none;
+	border-left: none;
+	padding: 8px;
+	color: blue;
+	background-color: white;
+}
+.customers .modal input:focus,
+.customers .modal select:focus {
+	border-right: 3px solid orange;
+	border-bottom: 3px solid orange;
+	color: orange;
+}
+.customers .modal .button-container {
+	display: flex;
+	gap: 10px;
 }

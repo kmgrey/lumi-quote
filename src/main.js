@@ -48,7 +48,7 @@ const createWindow = () => {
 		mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
 	}
 
-	mainWindow.webContents.openDevTools();
+	//mainWindow.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
@@ -155,6 +155,10 @@ ipcMain.handle("delete-quote", (event, id) => {
 
 // PDF
 ipcMain.handle("export-pdf", async (event, quoteId) => {
+	const quote = getQuoteById(quoteId)
+
+	const fileName = `${quote.quote_number}.pdf`
+	
 	const printWindow = new BrowserWindow({
 		show: false,
 		webPreferences: { preload: path.join(__dirname, "preload.js") },
@@ -177,7 +181,8 @@ ipcMain.handle("export-pdf", async (event, quoteId) => {
 
 	const { filePath, canceled } = await dialog.showSaveDialog({
 		title: "Save Quote PDF",
-		defaultPath: `quote-${quoteId}.pdf`,
+		//defaultPath: `quote-${quoteId}.pdf`,
+		defaultPath: fileName,
 		filters: [{ name: "PDF", extensions: ["pdf"] }],
 	});
 

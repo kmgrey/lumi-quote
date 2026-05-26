@@ -28,6 +28,13 @@ body {
 	width: 100vw;
 	margin-left: calc(50% - 50vw);
 }
+.err-msg {
+	font-weight: bold;
+	font-size: 1.4rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	color: red;
+}
 /* TABLE */
 .table {
 	width: 100%;
@@ -72,29 +79,34 @@ table .td-borderless {
 	border-right: 3px solid white;
 	margin-bottom: 4px;
 }
-.table-button svg {
+.table-button svg,
+.moda-button svg {
 	transform: translate(-4px, 1px);
 }
-.table-button:hover {
+.table-button:hover,
+.modal-button:hover {
 	transition: 150ms;
 	box-shadow: 3px 3px rgba(0, 0, 0, 0.5);
+	background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2));
 }
-.table-button:active {
+.table-button:active,
+.modal-button:active {
 	transition: 150ms;
 	transform: translate(3px, 3px);
 	box-shadow: none;
 }
-.table-button.save {
+.table-button.save,
+.modal-button.save {
 	background-color: green;
 }
-.table-button.cancel {
+.table-button.cancel,
+.modal-button.cancel,
+.table-button.delete,
+.modal-button.delete {
 	background-color: rgb(219, 39, 39);
 }
 .table-button.edit {
 	background-color: blue;
-}
-.table-button.delete {
-	background-color: rgb(219, 39, 39);
 }
 .outer-button {
 	width: 250px;
@@ -109,7 +121,8 @@ table .td-borderless {
 	border-bottom: 3px solid rgb(158, 158, 158);
 	border-right: 3px solid white;
 }
-.outer-button svg {
+.outer-button svg,
+.modal-button svg {
 	transform: translate(-6px, 1px);
 }
 .outer-button:hover {
@@ -121,4 +134,16 @@ table .td-borderless {
 	transition: 150ms;
 	transform: translate(3px, 3px);
 	box-shadow: none;
+}
+.modal-button {
+	height: 40px;
+	width: 150px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: bold;
+	color: white;
+	border-top: 0.5px solid white;
+	border-left: 0.5px solid white;
+	border-bottom: 3px solid rgb(158, 158, 158);
+	border-right: 3px solid white;
 }
