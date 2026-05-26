@@ -4,9 +4,10 @@ const { AutoUnpackNativesPlugin } = require("@electron-forge/plugin-auto-unpack-
 
 module.exports = {
 	packagerConfig: {
-		asar: {
-			unpack: "**/node_modules/better-sqlite3/**",
-		},
+		// asar: {
+		// 	unpack: "**/node_modules/better-sqlite3/**",
+		// },
+		asar: false,
 		name: "LumiQuote",
 		executableName: "lumi-quote",
 		icon: "./src/assets/icon",
