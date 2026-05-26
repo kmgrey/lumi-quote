@@ -7,6 +7,7 @@ module.exports = {
 		// asar: {
 		// 	unpack: "**/node_modules/better-sqlite3/**",
 		// },
+    asar: true,
 		name: "LumiQuote",
 		executableName: "lumi-quote",
 		icon: "./src/assets/icon",
