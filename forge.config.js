@@ -6,15 +6,14 @@ module.exports = {
 		// asar: {
 		// 	unpack: "**/node_modules/better-sqlite3/**",
 		// },
-		asar: false,
+		asar: {
+			unpack: "**/*.wasm",
+		},
 		name: "LumiQuote",
 		executableName: "lumi-quote",
 		icon: "./src/assets/icon",
 	},
-	rebuildConfig: {
-		forceRebuild: true,
-		onlyModules: ["better-sqlite3"],
-	},
+	rebuildConfig: {},
 	makers: [
 		{
 			name: "@electron-forge/maker-squirrel",
@@ -68,8 +67,8 @@ module.exports = {
 			[FuseV1Options.EnableCookieEncryption]: true,
 			[FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
 			[FuseV1Options.EnableNodeCliInspectArguments]: false,
-			[FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: false,
-			[FuseV1Options.OnlyLoadAppFromAsar]: false,
+			[FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
+			[FuseV1Options.OnlyLoadAppFromAsar]: true,
 		}),
 	],
 };

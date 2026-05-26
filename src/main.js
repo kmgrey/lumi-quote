@@ -4,6 +4,7 @@ import fs from "node:fs";
 import started from "electron-squirrel-startup";
 import Papa from "papaparse";
 import {
+	initDatabase,
 	getAllRanges,
 	getProductsByRange,
 	addProduct,
@@ -51,7 +52,8 @@ const createWindow = () => {
 	//mainWindow.webContents.openDevTools();
 };
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+	await initDatabase();
 	createWindow();
 
 	app.on("activate", () => {
@@ -155,10 +157,10 @@ ipcMain.handle("delete-quote", (event, id) => {
 
 // PDF
 ipcMain.handle("export-pdf", async (event, quoteId) => {
-	const quote = getQuoteById(quoteId)
+	const quote = getQuoteById(quoteId);
 
-	const fileName = `${quote.quote_number}.pdf`
-	
+	const fileName = `${quote.quote_number}.pdf`;
+
 	const printWindow = new BrowserWindow({
 		show: false,
 		webPreferences: { preload: path.join(__dirname, "preload.js") },
