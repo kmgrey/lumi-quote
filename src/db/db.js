@@ -1,7 +1,9 @@
 import path from "node:path";
 import { app } from "electron";
 import fs from "node:fs";
-import initSqlJs from "sql.js";
+//import initSqlJs from "sql.js";
+
+const initSqlJs = require("sql.js");
 
 let db;
 let dbPath;
@@ -25,7 +27,7 @@ function all(sql, params = []) {
 	while (stmt.step()) {
 		rows.push(stmt.getAsObject());
 	}
-	stmt.free(); 
+	stmt.free();
 	return rows;
 }
 
@@ -54,13 +56,13 @@ function lastInsertId() {
 // ---------------------------------------------------------------------------
 export async function initDatabase() {
 	const SQL = await initSqlJs({
-  locateFile: (file) => {
-    if (app.isPackaged) {
-      return path.join(process.resourcesPath, "app.asar.unpacked", "node_modules", "sql.js", "dist", file);
-    }
-    return path.join(app.getAppPath(), "node_modules", "sql.js", "dist", file);
-  }
-});
+		locateFile: (file) => {
+			if (app.isPackaged) {
+				return path.join(path.dirname(app.getAppPath()), "app.asar.unpacked", "node_modules", "sql.js", "dist", file);
+			}
+			return path.join(app.getAppPath(), "node_modules", "sql.js", "dist", file);
+		},
+	});
 
 	const userDataPath = app.getPath("userData");
 	dbPath = path.join(userDataPath, "lumi-quote.db");
@@ -171,13 +173,24 @@ export function getCustomers() {
 
 export function addCustomer(name, type, address, email, phone, primary_contact) {
 	run("INSERT INTO customers (name, type, address, email, phone, primary_contact) VALUES (?, ?, ?, ?, ?, ?)", [
-		name, type, address, email, phone, primary_contact,
+		name,
+		type,
+		address,
+		email,
+		phone,
+		primary_contact,
 	]);
 }
 
 export function updateCustomer(id, name, type, address, email, phone, primary_contact) {
 	run("UPDATE customers SET name=?, type=?, address=?, email=?, phone=?, primary_contact=? WHERE id=?", [
-		name, type, address, email, phone, primary_contact, id,
+		name,
+		type,
+		address,
+		email,
+		phone,
+		primary_contact,
+		id,
 	]);
 }
 
@@ -240,7 +253,8 @@ export function getAllQuotes() {
 }
 
 export function getQuoteById(id) {
-	return get(`
+	return get(
+		`
 		SELECT
 			quotes.*,
 			customers.name as customer_name,
@@ -251,21 +265,30 @@ export function getQuoteById(id) {
 		FROM quotes
 		JOIN customers ON quotes.customer_id = customers.id
 		WHERE quotes.id = ?
-	`, [id]);
+	`,
+		[id],
+	);
 }
 
 export function getQuoteItems(quote_id) {
-	return all(`
+	return all(
+		`
 		SELECT quote_items.*, products.name, products.part_code, products.image
 		FROM quote_items
 		JOIN products ON quote_items.product_id = products.id
 		WHERE quote_items.quote_id = ?
-	`, [quote_id]);
+	`,
+		[quote_id],
+	);
 }
 
 export function addQuoteItem(quote_id, product_id, quantity, unit_price, discount_eligible = 1) {
 	run("INSERT INTO quote_items (quote_id, product_id, quantity, unit_price, discount_eligible) VALUES (?, ?, ?, ?, ?)", [
-		quote_id, product_id, quantity, unit_price, discount_eligible,
+		quote_id,
+		product_id,
+		quantity,
+		unit_price,
+		discount_eligible,
 	]);
 }
 
@@ -313,7 +336,5 @@ export function findOrCreateCategory(name, rangeId) {
 }
 
 export function addProductFromImport(part_code, name, price, image, categoryId) {
-	run("INSERT INTO products (part_code, name, price, image, category_id) VALUES (?, ?, ?, ?, ?)", [
-		part_code, name, price, image, categoryId,
-	]);
+	run("INSERT INTO products (part_code, name, price, image, category_id) VALUES (?, ?, ?, ?, ?)", [part_code, name, price, image, categoryId]);
 }
