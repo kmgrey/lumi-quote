@@ -1,0 +1,40 @@
+name: Build Windows Installer
+
+on:
+   push:
+      branches: [main]
+   workflow_dispatch:
+
+jobs:
+   build-windows:
+      runs-on: windows-latest
+
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@v4
+
+         - name: Setup Node.js
+           uses: actions/setup-node@v4
+           with:
+              node-version: 20
+              cache: "npm"
+
+         - name: Install dependencies
+           run: npm ci
+
+         - name: Verify Electron binary
+           run: |
+              ls node_modules/electron/dist/
+              node_modules/electron/dist/electron.exe --version
+
+         - name: Build Windows installer
+           run: npm run make -- --platform=win32
+           env:
+              NODE_ENV: production
+
+         - name: Upload installer
+           uses: actions/upload-artifact@v4
+           with:
+              name: lumi-quote-windows-installer
+              path: out/make/squirrel.windows/x64/*.exe
+              retention-days: 30
