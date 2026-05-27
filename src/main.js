@@ -1,3 +1,7 @@
+process.on('uncaughtException', (error) => {
+  require('fs').writeFileSync('C:\\lumi-crash.log', error.stack);
+});
+
 import { app, BrowserWindow, ipcMain, dialog } from "electron";
 import path from "node:path";
 import fs from "node:fs";
