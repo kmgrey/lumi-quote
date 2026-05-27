@@ -54,8 +54,13 @@ function lastInsertId() {
 // ---------------------------------------------------------------------------
 export async function initDatabase() {
 	const SQL = await initSqlJs({
-		locateFile: (file) => path.join(app.getAppPath(), "node_modules", "sql.js", "dist", file),
-	});
+  locateFile: (file) => {
+    if (app.isPackaged) {
+      return path.join(process.resourcesPath, "app.asar.unpacked", "node_modules", "sql.js", "dist", file);
+    }
+    return path.join(app.getAppPath(), "node_modules", "sql.js", "dist", file);
+  }
+});
 
 	const userDataPath = app.getPath("userData");
 	dbPath = path.join(userDataPath, "lumi-quote.db");
